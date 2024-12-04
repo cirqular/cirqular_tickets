@@ -19,7 +19,6 @@ For more details, check out our [CONTRIBUTING.md](./CONTRIBUTING.md).
 ---
 
 ## Useful Links
-- [Cirqular Documentation](https://example.com/docs)
-- [Cirqular Support](https://example.com/support)
+- [Cirqular Support]([https://example.com/support](https://www.cirqular.ai/kontakt-formular/))
 
 ---
