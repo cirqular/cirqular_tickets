@@ -1,0 +1,30 @@
+name: Create Jira Issue on GitHub Issue Creation
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create_jira_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Jira Issue
+        id: create_jira_issue
+        uses: atlassian/gajira-create@v3.4.0
+        with:
+          jira-base-url: ${{ secrets.JIRA_BASE_URL }}
+          jira-user-email: ${{ secrets.JIRA_USER_EMAIL }}
+          jira-api-token: ${{ secrets.JIRA_API_TOKEN }}
+          project: ${{ secrets.JIRA_PROJECT_KEY }}
+          issue-type: "Task"
+          summary: ${{ github.event.issue.title }}
+          description: |
+            Created from GitHub Issue [#${{ github.event.issue.number }}](${{ github.event.issue.html_url }})
+
+            ${{ github.event.issue.body }}
+      - name: Update GitHub Issue Title
+        uses: actions-ecosystem/action-update-issue@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          title: "[${{ steps.create_jira_issue.outputs.issue-key }}] ${{ github.event.issue.title }}"
