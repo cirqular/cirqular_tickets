@@ -37,7 +37,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-          TITLE: "[${{ steps.get_jira_issue_key.outputs.issue }}] ${{ github.event.issue.title }}"
+          TITLE: "[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}"
 
       #      - name: Update GitHub Issue Title
 #        uses: actions/github-script@v6
