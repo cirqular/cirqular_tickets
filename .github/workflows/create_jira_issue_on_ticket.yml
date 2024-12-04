@@ -30,8 +30,20 @@ jobs:
 
 
       - name: Update GitHub Issue Title
-        uses: actions-ecosystem/action-update-issue@v1
+        uses: actions/github-script@v6
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          JIRA_ISSUE_KEY: ${{ steps.create.outputs.issue }}
+          ORIGINAL_TITLE: ${{ github.event.issue.title }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          title: "[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}"
+          script: |
+            const issueNumber = ${{ github.event.issue.number }};
+            const jiraIssueKey = '${{ steps.create_jira_issue.outputs.issue_key }}';
+            const originalTitle = '${{ github.event.issue.title }}';
+
+            await github.rest.issues.update({
+              ...context.repo,
+              issue_number: issueNumber,
+              title: `[${jiraIssueKey}] ${originalTitle}`,
+            });
