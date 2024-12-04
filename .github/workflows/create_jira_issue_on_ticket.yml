@@ -8,23 +8,30 @@ jobs:
   create_jira_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Jira Issue
-        id: create_jira_issue
-        uses: atlassian/gajira-create@v3.4.0
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+      - name: Create
+        id: create
+        uses: atlassian/gajira-create@v3
         with:
-          jira-base-url: ${{ secrets.JIRA_BASE_URL }}
-          jira-user-email: ${{ secrets.JIRA_USER_EMAIL }}
-          jira-api-token: ${{ secrets.JIRA_API_TOKEN }}
-          project: ${{ secrets.JIRA_PROJECT_KEY }}
-          issue-type: "Task"
+          project: CR
+          issuetype: Task
           summary: ${{ github.event.issue.title }}
           description: |
             Created from GitHub Issue [#${{ github.event.issue.number }}](${{ github.event.issue.html_url }})
 
             ${{ github.event.issue.body }}
+#          fields: '{"customfield_10171": "test"}'
+
+
       - name: Update GitHub Issue Title
         uses: actions-ecosystem/action-update-issue@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          title: "[${{ steps.create_jira_issue.outputs.issue-key }}] ${{ github.event.issue.title }}"
+          title: "[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}"
