@@ -1,2 +1,25 @@
-# cirqular_tickets
-This repository is dedicated to collecting user feedback for the service of cirqular pointcloud analytics. Use it to report bugs, suggest new features, or provide general feedback about our software. Your input helps us improve and deliver better solutions!
+# cirqular feedback
+
+Welcome to the cirqular feedback repository!
+
+This repository is the central place to:
+- Report bugs
+- Request new features
+- Share general feedback
+
+Your input is invaluable to us and helps shape the future of cirqular pointcloud analytics. Thank you for contributing!
+
+## How to Submit Feedback
+1. Go to the **Issues** tab above.
+2. Choose the appropriate category (Bug Report, Feature Request, or General Feedback).
+3. Fill out the template and submit.
+
+For more details, check out our [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+---
+
+## Useful Links
+- [Cirqular Documentation](https://example.com/docs)
+- [Cirqular Support](https://example.com/support)
+
+---
