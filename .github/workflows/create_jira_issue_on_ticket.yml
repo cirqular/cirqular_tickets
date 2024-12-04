@@ -32,21 +32,38 @@ jobs:
         id: get_jira_issue_key
         run: echo "issue=${{ steps.create.outputs.issue }}"
 
-      - name: Update GitHub Issue Title
-        uses: actions/github-script@v6
+      - name: Update Title
+        run: gh issue edit "$NUMBER" --title "$TITLE"
         env:
-#          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          JIRA_ISSUE_KEY: ${{ steps.create.outputs.issue }}
-#          ORIGINAL_TITLE: ${{ github.event.issue.title }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issueNumber = ${{ github.event.issue.number }};
-            const jiraIssueKey = '$JIRA_ISSUE_KEY';
-            const originalTitle = '${{ github.event.issue.title }}';
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          TITLE: "[${{ steps.get_jira_issue_key.outputs.issue }}] ${{ github.event.issue.title }}"
 
-            await github.rest.issues.update({
-              ...context.repo,
-              issue_number: issueNumber,
-              title: `[${jiraIssueKey}] ${originalTitle}`,
-            });
+      #      - name: Update GitHub Issue Title
+#        uses: actions/github-script@v6
+#        env:
+##          ISSUE_NUMBER: ${{ github.event.issue.number }}
+#          JIRA_ISSUE_KEY: ${{ steps.create.outputs.issue }}
+##          ORIGINAL_TITLE: ${{ github.event.issue.title }}
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const issueNumber = ${{ github.event.issue.number }};
+#            const jiraIssueKey = '$JIRA_ISSUE_KEY';
+#            const originalTitle = '${{ github.event.issue.title }}';
+#
+#            await github.rest.issues.update({
+#              ...context.repo,
+#              issue_number: issueNumber,
+#              title: `[${jiraIssueKey}] ${originalTitle}`,
+#            });
+
+      - name: Add comment
+        run: gh issue comment "$NUMBER" --body "$BODY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            Jira issue created: ${{ steps.create.outputs.issue }}
+            [View Jira issue](${{ steps.create.outputs.issue_url }})
