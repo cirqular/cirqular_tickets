@@ -1,6 +1,6 @@
-# cirqular feedback
+# cirqular Feedback
 
-Welcome to the cirqular feedback repository!
+Welcome to the cirqular Feedback Repository!
 
 This repository is the central place to:
 - Report bugs
