@@ -26,6 +26,7 @@ jobs:
         - name: Parse Jira Issue Key
           id: get_jira_issue_key
           run: |
+            echo "comment_body=${{ steps.fc.outputs.comment-body }}"
             echo "comment_body=${{ steps.fc.outputs.comment-body }}" >> $GITHUB_ENV
             issue_key=$(echo "${{ steps.fc.outputs.comment-body }}" | grep -oP 'Jira issue created: \K[A-Z]+-\d+')
             echo "issue_key=$issue_key" >> $GITHUB_OUTPUT
