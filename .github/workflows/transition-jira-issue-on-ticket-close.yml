@@ -1,0 +1,38 @@
+name: Transition Jira Issue
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  transition_issue:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Login
+          uses: justin-jhg/gajira-login@v1
+          env:
+            JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+            JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+            JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+        - name: Find Comment
+          uses: peter-evans/find-comment@v3
+          id: fc
+          with:
+            issue-number: ${{ github.event.issue.number }}
+            comment-author: github-actions
+            body-includes: Jira issue created
+
+        - name: Parse Jira Issue Key
+          id: get_jira_issue_key
+          run: |
+            echo "comment_body=${{ steps.fc.outputs.comment-body }}" >> $GITHUB_ENV
+            issue_key=$(echo "${{ steps.fc.outputs.comment-body }}" | grep -oP 'Jira issue created: \K[A-Z]+-\d+')
+            echo "issue_key=$issue_key" >> $GITHUB_OUTPUT
+
+        - name: Transition issue
+          id: transition
+          uses: atlassian/gajira-transition@v3
+          with:
+            issue: ${{ steps.get_jira_issue_key.outputs.issue_key }}
+            transition: "Done"
+  }
