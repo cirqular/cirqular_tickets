@@ -23,7 +23,7 @@ jobs:
           issuetype: Task
           summary: ${{ github.event.issue.title }}
           description: |
-            Created from GitHub Issue [#${{ github.event.issue.number }}](${{ github.event.issue.html_url }})
+            Created from [GitHub Issue](${{ github.event.issue.html_url }})
 
             ${{ github.event.issue.body }}
 #          fields: '{"Github Issue": "${{ github.event.issue.html_url }}"}' TODO: gajira is outdated and uses jira v2 api, which does not support custom fields (this todo was written by copilot, so i am not the first who noticed lol)

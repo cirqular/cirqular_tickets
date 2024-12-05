@@ -43,7 +43,7 @@ jobs:
           uses: peter-evans/create-or-update-comment@v1
           with:
             comment-id: ${{ steps.fc.outputs.comment-id }}
-            body: >
+            body: |
               Jira issue set to Done: ${{ steps.get_jira_issue_key.outputs.issue_key }}
               [View Jira issue](https://cirqular.atlassian.net/browse/${{ steps.get_jira_issue_key.outputs.issue_key }})
             reactions: hooray
