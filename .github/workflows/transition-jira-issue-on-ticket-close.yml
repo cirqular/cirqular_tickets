@@ -37,12 +37,13 @@ jobs:
             issue: ${{ steps.get_jira_issue_key.outputs.issue_key }}
             transition: "Done"
 
-        - name: Add comment
-          run: gh issue comment "$ISSUE_URL" --body "$BODY"
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GH_REPO: ${{ github.repository }}
-            ISSUE_URL: ${{ github.event.issue.html_url }}
-            BODY: >
+        - name: Update comment
+          if: steps.fc.outputs.comment-id != ''
+          uses: peter-evans/create-or-update-comment@v1
+          with:
+            comment-id: ${{ steps.fc.outputs.comment-id }}
+            body: >
               Jira issue set to Done: ${{ steps.create.outputs.issue }}
               [View Jira issue](${{ steps.create.outputs.issue_url }})
+            reactions: hooray
+
