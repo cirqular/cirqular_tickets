@@ -20,7 +20,7 @@ jobs:
           id: fc
           with:
             issue-number: ${{ github.event.issue.number }}
-            comment-author: github-actions
+            comment-author: github-actions[bot]
             body-includes: Jira issue created
 
         - name: Parse Jira Issue Key
