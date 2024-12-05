@@ -43,7 +43,7 @@ jobs:
           with:
             comment-id: ${{ steps.fc.outputs.comment-id }}
             body: >
-              Jira issue set to Done: ${{ steps.create.outputs.issue }}
-              [View Jira issue](${{ steps.create.outputs.issue_url }})
+              Jira issue set to Done: ${{ steps.get_jira_issue_key.outputs.issue_key }}
+              [View Jira issue](https://cirqular.atlassian.net/browse/${{ steps.get_jira_issue_key.outputs.issue_key }})
             reactions: hooray
 

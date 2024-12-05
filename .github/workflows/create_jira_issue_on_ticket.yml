@@ -42,24 +42,6 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
           TITLE: "[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}"
 
-      #      - name: Update GitHub Issue Title
-#        uses: actions/github-script@v6
-#        env:
-##          ISSUE_NUMBER: ${{ github.event.issue.number }}
-#          JIRA_ISSUE_KEY: ${{ steps.create.outputs.issue }}
-##          ORIGINAL_TITLE: ${{ github.event.issue.title }}
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          script: |
-#            const issueNumber = ${{ github.event.issue.number }};
-#            const jiraIssueKey = '$JIRA_ISSUE_KEY';
-#            const originalTitle = '${{ github.event.issue.title }}';
-#
-#            await github.rest.issues.update({
-#              ...context.repo,
-#              issue_number: issueNumber,
-#              title: `[${jiraIssueKey}] ${originalTitle}`,
-#            });
 
       - name: Add comment
         run: gh issue comment "$ISSUE_URL" --body "$BODY"
@@ -69,4 +51,4 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
           BODY: >
             Jira issue created: ${{ steps.create.outputs.issue }}
-            [View Jira issue](${{ steps.create.outputs.issue_url }})
+            [View Jira issue](https://cirqular.atlassian.net/browse/${{ steps.create.outputs.issue_url }})
