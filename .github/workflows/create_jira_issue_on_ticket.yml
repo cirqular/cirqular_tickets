@@ -26,7 +26,10 @@ jobs:
             Created from GitHub Issue [#${{ github.event.issue.number }}](${{ github.event.issue.html_url }})
 
             ${{ github.event.issue.body }}
-          fields: '{"Github Issue": "${{ github.event.issue.html_url }}"}'
+#          fields: '{"Github Issue": "${{ github.event.issue.html_url }}"}' TODO: gajira is outdated and uses jira v2 api, which does not support custom fields (this todo was written by copilot, so i am not the first who noticed lol)
+        env:
+          JIRA_PROJECT: CR
+          GITHUB_ISSUE_URL: ${{ github.event.issue.html_url }}
 
       - name: Get Jira Issue Key
         id: get_jira_issue_key
