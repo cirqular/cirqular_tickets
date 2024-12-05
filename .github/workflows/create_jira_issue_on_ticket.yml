@@ -51,4 +51,4 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
           BODY: >
             Jira issue created: ${{ steps.create.outputs.issue }}
-            [View Jira issue](https://cirqular.atlassian.net/browse/${{ steps.create.outputs.issue_url }})
+            [View Jira issue](https://cirqular.atlassian.net/browse/${{ steps.create.outputs.issue }})
